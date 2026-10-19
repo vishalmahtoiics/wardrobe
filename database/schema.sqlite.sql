@@ -1,0 +1,92 @@
+-- Wardrobe schema for SQLite 3
+
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE COLLATE NOCASE,
+  password_hash TEXT NOT NULL,
+  gender TEXT NOT NULL DEFAULT 'other',
+  role TEXT NOT NULL DEFAULT 'user',
+  status TEXT NOT NULL DEFAULT 'active',
+  avatar TEXT NULL,
+  bio TEXT NULL,
+  visibility TEXT NOT NULL DEFAULT 'private',
+  theme TEXT NOT NULL DEFAULT 'teak',
+  quota_mb INTEGER NULL,
+  created_at TEXT NOT NULL,
+  last_seen_at TEXT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tokens (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token_hash TEXT NOT NULL UNIQUE,
+  user_agent TEXT NULL,
+  created_at TEXT NOT NULL,
+  last_used_at TEXT NULL
+);
+
+CREATE TABLE IF NOT EXISTS locations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  emoji TEXT NOT NULL DEFAULT '🏠',
+  sort INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_locations_user ON locations(user_id);
+
+CREATE TABLE IF NOT EXISTS items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  location_id INTEGER NULL REFERENCES locations(id) ON DELETE SET NULL,
+  title TEXT NOT NULL,
+  category TEXT NOT NULL DEFAULT 'Other',
+  placement TEXT NOT NULL DEFAULT 'fold',
+  tags TEXT NOT NULL DEFAULT '',
+  description TEXT NULL,
+  color TEXT NULL,
+  season TEXT NULL,
+  brand TEXT NULL,
+  status TEXT NOT NULL DEFAULT 'in',
+  is_public INTEGER NOT NULL DEFAULT 0,
+  favorite INTEGER NOT NULL DEFAULT 0,
+  wear_count INTEGER NOT NULL DEFAULT 0,
+  last_worn_at TEXT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_items_user ON items(user_id);
+CREATE INDEX IF NOT EXISTS idx_items_location ON items(location_id);
+
+CREATE TABLE IF NOT EXISTS item_images (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  path TEXT NOT NULL,
+  thumb TEXT NOT NULL,
+  size_bytes INTEGER NOT NULL DEFAULT 0,
+  thumb_bytes INTEGER NOT NULL DEFAULT 0,
+  width INTEGER NOT NULL DEFAULT 0,
+  height INTEGER NOT NULL DEFAULT 0,
+  sort INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_images_item ON item_images(item_id);
+CREATE INDEX IF NOT EXISTS idx_images_user ON item_images(user_id);
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  room TEXT NOT NULL DEFAULT 'general',
+  body TEXT NOT NULL,
+  item_id INTEGER NULL REFERENCES items(id) ON DELETE SET NULL,
+  deleted INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_chat_room ON chat_messages(room, id);
+
+CREATE TABLE IF NOT EXISTS settings (
+  k TEXT NOT NULL PRIMARY KEY,
+  v TEXT NULL
+);

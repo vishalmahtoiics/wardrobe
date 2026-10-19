@@ -1,0 +1,12 @@
+{
+  "appId": "com.wardrobe.almirah",
+  "appName": "Wardrobe",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#f7efe4"
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

@@ -1,0 +1,5 @@
+# Send every request into public/ so app/, config/ and storage/ are never reachable.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(?!public/)(.*)$ public/$1 [L]
+</IfModule>

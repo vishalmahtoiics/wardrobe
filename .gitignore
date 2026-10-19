@@ -1,0 +1,8 @@
+config/config.php
+storage/*.sqlite*
+public/uploads/u*/
+node_modules/
+mobile/www/
+mobile/android/
+mobile/node_modules/
+.DS_Store

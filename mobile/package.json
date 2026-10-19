@@ -1,0 +1,22 @@
+{
+  "name": "wardrobe-mobile",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Android app shell for Wardrobe (Capacitor). The web UI comes from ../public.",
+  "scripts": {
+    "prepare-www": "node scripts/prepare-www.js",
+    "android:add": "npx cap add android",
+    "android:assets": "npx capacitor-assets generate --android",
+    "android:patch": "node scripts/patch-android.js",
+    "sync": "npm run prepare-www && npx cap sync android",
+    "apk": "npm run sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.3",
+    "@capacitor/core": "8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "8.5.3"
+  }
+}

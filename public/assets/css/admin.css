@@ -1,0 +1,53 @@
+/* Super Admin portal layout (reuses tokens and components from app.css). */
+.adm { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.adm-side { position: sticky; top: 0; height: 100vh; padding: 20px 14px; border-right: 1px solid var(--line); background: var(--surface); display: flex; flex-direction: column; gap: 4px; }
+.adm-side .brand { margin: 0 8px 18px; }
+.adm-side a { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 12px; color: var(--muted); text-decoration: none; font-weight: 600; }
+.adm-side a.on { background: var(--accent-soft); color: var(--accent); }
+.adm-side .foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.adm-main { padding: 22px 26px 60px; min-width: 0; }
+.adm-main h1 { margin: 0 0 4px; font-size: 26px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin: 18px 0; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; }
+.kpi small { color: var(--muted); font-weight: 600; font-size: 12px; display: block; }
+.kpi b { font-size: 26px; display: block; margin-top: 2px; }
+.kpi span { font-size: 12px; color: var(--muted); }
+.panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px; min-width: 0; }
+.panel h3 { margin: 0 0 12px; font-size: 15px; }
+.hbar { display: grid; grid-template-columns: minmax(80px, 140px) 1fr auto; gap: 10px; align-items: center; margin: 8px 0; font-size: 13px; }
+.hbar .bar { height: 12px; }
+.spark { display: flex; align-items: flex-end; gap: 4px; height: 120px; padding-top: 8px; }
+.spark div { flex: 1; background: var(--accent); border-radius: 5px 5px 2px 2px; min-height: 3px; position: relative; opacity: .85; }
+.spark div:hover { opacity: 1; }
+.spark-labels { display: flex; gap: 4px; font-size: 10px; color: var(--muted); }
+.spark-labels span { flex: 1; text-align: center; }
+.tbl-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tbl th { text-align: left; padding: 11px 12px; color: var(--muted); font-size: 12px; font-weight: 600; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.tbl td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl tr.click { cursor: pointer; }
+.tbl tr.click:hover td { background: var(--surface2); }
+.pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 11.5px; font-weight: 600; background: var(--surface2); }
+.pill.blocked { background: #f8d7d7; color: #a12626; }
+.pill.superadmin { background: #f6e3b4; color: #7a5300; }
+.pill.admin { background: #dfe6ff; color: #2c43a8; }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 16px 0; }
+.toolbar .input { width: auto; flex: 1; min-width: 160px; padding: 9px 12px; }
+.img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.img-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 12px; }
+.img-card .ph { aspect-ratio: 1; background: var(--surface2) center/cover; position: relative; }
+.img-card .sz { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,.7); color: #fff; padding: 2px 8px; border-radius: 99px; font-weight: 700; }
+.img-card .sz.big { background: #c73636; }
+.img-card .m { padding: 8px 10px; }
+.pager { display: flex; gap: 8px; justify-content: center; margin: 18px 0; align-items: center; }
+.adm-top { display: none; }
+@media (max-width: 860px) {
+  .adm { grid-template-columns: 1fr; }
+  .adm-side { display: none; }
+  .adm-top { display: flex; position: sticky; top: 0; z-index: 10; gap: 6px; overflow-x: auto; padding: calc(10px + env(safe-area-inset-top)) 12px 10px; background: var(--surface); border-bottom: 1px solid var(--line); scrollbar-width: none; }
+  .adm-top a { flex: none; padding: 8px 12px; border-radius: 12px; text-decoration: none; color: var(--muted); font-weight: 600; font-size: 13px; }
+  .adm-top a.on { background: var(--accent-soft); color: var(--accent); }
+  .adm-main { padding: 16px 14px 60px; }
+}
